@@ -1,5 +1,55 @@
 # Spock Extension for Quarkus
 
+### How to import
+
+```xml
+<repositories>
+    <repository>
+        <id>jitpack.io</id>
+        <url>https://jitpack.io</url>
+    </repository>
+</repositories>
+
+<dependency>
+    <groupId>com.github.NetoDevel</groupId>
+    <artifactId>quarkus-spock</artifactId>
+    <version>1.0-SNAPSHOT</version>
+</dependency>
+
+```
+
+### How to use
+
+```groovy
+@QuarkusSpec
+class MySpec extends Specification {
+
+   @Inject
+   MySimpleBeanService service
+
+   @Inject
+   SimpleBean1 simple1
+
+   def "Make Sure My Stuff Mocks"(){
+       setup:
+       simple1.get() >> "OK"
+       expect:
+       service.callSimple1sMethod() == "OK"
+   }
+
+   @Mocks 
+   SimpleBean1Impl mock(){
+       return Mock(SimpleBean1Impl)
+   }
+
+   @Mocks 
+   SimpleBean2Impl mock(){
+       return Stub(SimpleBean2Impl)
+   }
+```
+
+
+### How to configure
 
 Add this to your plugins in your Maven build
 
